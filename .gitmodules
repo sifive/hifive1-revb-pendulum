@@ -1,0 +1,4 @@
+[submodule "zephyr"]
+	path = zephyr
+	url = https://github.com/sifive/riscv-zephyr.git
+	branch = hifive1-revb-pendulum
