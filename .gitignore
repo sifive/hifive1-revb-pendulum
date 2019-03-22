@@ -1,0 +1,4 @@
+.west/
+net-tools/
+build/
+zephyr.hex
