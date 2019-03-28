@@ -21,7 +21,7 @@
 #define RENDER_QUEUE_COUNT 1
 
 #define DELTA_T 1 /* ms */
-#define ZETA	0.1 /* Damping coefficient */
+#define ZETA	0.35 /* Damping coefficient */
 
 #define PI 3.1415926535
 #define RADIUS	25  /* mm */
@@ -239,6 +239,7 @@ int main(void)
 
     /* The linear velocity is encoded in mm/ms */
     float v = 0;
+    float v_next;
 
     /* The linear acceleration is encoded in mm/ms^2 */
     float a = 0;
@@ -264,10 +265,13 @@ int main(void)
 	    a = magnitude(accel, forward);
 
 	    /* Update the velocity */
-	    v = v + DELTA_T * a - (v * ZETA);
+	    v_next = (1 - ZETA) * v + DELTA_T * a;
 
 	    /* Update the position */
 	    p = p + DELTA_T * v;
+
+	    /* Advance the state one index */
+	    v = v_next;
 
 	    /* Render the position */
 	    rc = k_msgq_put(&render_queue, &p, K_FOREVER);
